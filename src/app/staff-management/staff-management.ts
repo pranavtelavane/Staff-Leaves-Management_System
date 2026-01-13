@@ -38,6 +38,8 @@ export class StaffManagement implements OnInit {
 
   profilePreview: string | null = null;
 
+  defaultAvatar = 'avatar.svg';
+
   constructor(
     private auth: Authservice,
     private http: HttpClient,
@@ -184,5 +186,9 @@ submitAddStaff(): void {
     this.loadStaff(); // refresh list
   });
 }
+
+onImgError(event: Event) {
+    (event.target as HTMLImageElement).src = this.defaultAvatar;
+  }
 
 }

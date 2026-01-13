@@ -1,33 +1,19 @@
-<div class="d-flex flex-column vh-100 border-end bg-light">
+<a routerLink="/dashboard"
+   routerLinkActive="active"
+   class="list-group-item list-group-item-action d-flex align-items-center gap-2">
+  📊 Dashboard
+</a>
 
-  <div class="list-group list-group-flush flex-grow-1">
+@if (isHod()) {
+  <a routerLink="/staff-management"
+     routerLinkActive="active"
+     class="list-group-item list-group-item-action d-flex align-items-center gap-2">
+    👥 Staff Management
+  </a>
+}
 
-    <a
-      routerLink="/dashboard"
-      routerLinkActive="active"
-      class="list-group-item list-group-item-action"
-    >
-      Dashboard
-    </a>
-
-    @if (isHod()) {
-      <a
-        routerLink="/staff-management"
-        routerLinkActive="active"
-        class="list-group-item list-group-item-action"
-      >
-        Staff Management
-      </a>
-    }
-
-    <a
-      routerLink="/leave-management"
-      routerLinkActive="active"
-      class="list-group-item list-group-item-action"
-    >
-      Leave Management
-    </a>
-
-  </div>
-
-</div>
+<a routerLink="/leave-management"
+   routerLinkActive="active"
+   class="list-group-item list-group-item-action d-flex align-items-center gap-2">
+  🗓 Leave Management
+</a>

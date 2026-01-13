@@ -1,29 +1,28 @@
 <nav class="header d-flex align-items-center justify-content-between px-4">
-  
-  <!-- LEFT: APP NAME -->
-  <div class="fw-bold fs-5">
-    Staff Portal
+
+  <!-- LEFT -->
+  <div class="d-flex align-items-center gap-2">
+    <span class="fw-bold fs-5 text-primary">Staff Portal</span>
   </div>
 
-  <!-- RIGHT: USER INFO -->
+  <!-- RIGHT -->
   <div class="d-flex align-items-center gap-3">
 
-    <!-- AVATAR -->
-    <img
-      [src]="user()?.profilePhoto || defaultAvatar"
-      (error)="onImgError($event)"
-      class="avatar"
-      alt="Profile"
-    />
+    <div class="d-flex align-items-center gap-2">
+      <img
+        [src]="user()?.profilePhoto || defaultAvatar"
+        (error)="onImgError($event)"
+        class="avatar"
+        alt="Profile"
+      />
 
-    <!-- NAME + ROLE -->
-    <div class="text-end lh-sm">
-      <div class="fw-semibold">{{ user()?.name }}</div>
-      <small class="text-muted">{{ user()?.role }}</small>
+      <div class="lh-sm">
+        <div class="fw-semibold">{{ user()?.name }}</div>
+        <small class="text-muted text-uppercase">{{ user()?.role }}</small>
+      </div>
     </div>
 
-    <!-- LOGOUT -->
-    <button class="btn btn-outline-danger btn-sm" (click)="logout()">
+    <button class="btn btn-sm btn-outline-danger" (click)="logout()">
       Logout
     </button>
 
