@@ -1,39 +1,80 @@
-<div class="container vh-100 d-flex justify-content-center align-items-center">
-  <div class="card shadow p-4" style="width: 350px">
-    <h4 class="text-center mb-3">Login</h4>
+<div class="container min-vh-100 d-flex align-items-center justify-content-center bg-light">
+  <div class="card shadow-lg border-0 w-100" style="max-width: 380px">
 
-    <form [formGroup]="loginForm" (ngSubmit)="login()">
-      <div class="mb-3">
-        <label class="form-label">Username</label>
-        <input class="form-control" formControlName="username" 
-        [class.is-invalid]="loginForm.get('username')?.invalid && loginForm.get('username')?.touched"/>
-        @if (loginForm.get('username')?.touched && loginForm.get('username')?.hasError('required'))
-        {
-        <div class="text-danger small">Username is required</div>
+    <!-- HEADER -->
+    <div class="card-body p-4">
+      <div class="text-center mb-4">
+        <h4 class="fw-bold mb-1">Welcome Back</h4>
+        <small class="text-muted">Login to continue</small>
+      </div>
+
+      <form [formGroup]="loginForm" (ngSubmit)="login()">
+
+        <!-- USERNAME -->
+        <div class="mb-3">
+          <label class="form-label fw-semibold">Username</label>
+          <input
+            class="form-control"
+            placeholder="Enter username"
+            formControlName="username"
+            [class.is-invalid]="
+              loginForm.get('username')?.invalid &&
+              loginForm.get('username')?.touched
+            "
+          />
+          @if (loginForm.get('username')?.touched &&
+               loginForm.get('username')?.hasError('required')) {
+            <div class="invalid-feedback">
+              Username is required
+            </div>
+          }
+        </div>
+
+        <!-- PASSWORD -->
+        <div class="mb-3">
+          <label class="form-label fw-semibold">Password</label>
+          <input
+            type="password"
+            class="form-control"
+            placeholder="Enter password"
+            formControlName="password"
+            [class.is-invalid]="
+              loginForm.get('password')?.invalid &&
+              loginForm.get('password')?.touched
+            "
+          />
+          @if (loginForm.get('password')?.touched &&
+               loginForm.get('password')?.hasError('required')) {
+            <div class="invalid-feedback">
+              Password is required
+            </div>
+          }
+        </div>
+
+        <!-- API ERROR -->
+        @if (error) {
+          <div class="alert alert-danger py-2 small text-center">
+            {{ error }}
+          </div>
         }
-      </div>
 
-      <div class="mb-3">
-        <label class="form-label">Password</label>
-        <input type="password" class="form-control" formControlName="password" 
-        [class.is-invalid]="loginForm.get('password')?.invalid && loginForm.get('password')?.touched"/>
-        @if (loginForm.get('password')?.touched && loginForm.get('password')?.hasError('required'))
-        {
-        <div class="text-danger small">Password is required</div>
-        }
-      </div>
+        <!-- LOGIN BUTTON -->
+        <button
+          class="btn btn-primary w-100 fw-semibold mt-2"
+          type="submit"
+        >
+          Login
+        </button>
 
-      @if (error) {
-      <div class="alert alert-danger">
-        {{ error }}
-      </div>
-      }
+        <!-- FOOTER -->
+        <div class="text-center mt-3">
+          <small class="text-muted">Don't have an account?</small><br />
+          <a routerLink="/auth/register" class="fw-semibold text-decoration-none">
+            Create Account
+          </a>
+        </div>
 
-      <button class="btn btn-primary w-100" type="submit">Login</button>
-
-      <div class="text-center mt-3">
-        <a routerLink="/auth/register">Register</a>
-      </div>
-    </form>
+      </form>
+    </div>
   </div>
 </div>

@@ -10,6 +10,7 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-staff-management',
@@ -50,11 +51,17 @@ export class StaffManagement implements OnInit {
   ngOnInit(): void {
     this.hod = this.auth.getCurrentUser();
     this.addStaffForm = this.fb.group({
-      name: ['', Validators.required],
-      username: ['', Validators.required],
+      name: ['', [Validators.required, Validators.pattern('^[a-zA-Z ]+$')]],
+      username: ['', [Validators.required, Validators.pattern('^[a-zA-Z0-9_]+$')]],
       email: ['', [Validators.required, Validators.email]],
-      mobile: ['', Validators.required],
-      password: ['', Validators.required],
+      mobile: ['', [Validators.required, Validators.pattern('^[0-9]{10}$')]],
+      password: [
+        '',
+        [
+          Validators.required,
+          Validators.pattern('^(?=.*[A-Za-z])(?=.*\\d)(?=.*[@$!%*#?&])[A-Za-z\\d@$!%*#?&]{8,}$'),
+        ],
+      ],
       profilePhoto: [''],
     });
 
@@ -151,44 +158,50 @@ export class StaffManagement implements OnInit {
   }
 
   openAddStaffModal(): void {
-  this.addStaffForm.reset();
-  this.profilePreview = null;
-}
-
-onPhotoSelect(event: Event): void {
-  const file = (event.target as HTMLInputElement).files?.[0];
-  if (!file) return;
-
-  const reader = new FileReader();
-  reader.onload = () => {
-    this.profilePreview = reader.result as string;
-    this.addStaffForm.patchValue({
-      profilePhoto: reader.result
-    });
-  };
-  reader.readAsDataURL(file);
-}
-
-submitAddStaff(): void {
-  if (this.addStaffForm.invalid) {
-    this.addStaffForm.markAllAsTouched();
-    return;
+    this.addStaffForm.reset();
+    this.profilePreview = null;
   }
 
-  const payload = {
-    ...this.addStaffForm.value,
-    role: 'STAFF',
-    department: this.hod.department
-  };
+  onPhotoSelect(event: Event): void {
+    const file = (event.target as HTMLInputElement).files?.[0];
+    if (!file) return;
 
-  this.http.post(`${environment.apiUrl}/users`, payload).subscribe(() => {
-    alert('Staff added successfully');
-    this.loadStaff(); // refresh list
-  });
-}
+    const reader = new FileReader();
+    reader.onload = () => {
+      this.profilePreview = reader.result as string;
+      this.addStaffForm.patchValue({
+        profilePhoto: reader.result,
+      });
+    };
+    reader.readAsDataURL(file);
+  }
 
-onImgError(event: Event) {
+  submitAddStaff(): void {
+    if (this.addStaffForm.invalid) {
+      this.addStaffForm.markAllAsTouched();
+      return;
+    }
+
+    const payload = {
+      ...this.addStaffForm.value,
+      role: 'STAFF',
+      department: this.hod.department,
+    };
+
+    this.http.post(`${environment.apiUrl}/users`, payload).subscribe(() => {
+      Swal.fire({
+        icon: 'success',
+        title: 'Staff Added',
+        text: 'New staff member added successfully.',
+        confirmButtonColor: '#198754',
+        timer: 2000,
+        showConfirmButton: false
+      });
+      this.loadStaff();
+    });
+  }
+
+  onImgError(event: Event) {
     (event.target as HTMLImageElement).src = this.defaultAvatar;
   }
-
 }

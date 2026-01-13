@@ -53,6 +53,17 @@
       "profilePhoto": null,
       "role": "STAFF",
       "department": "IT"
+    },
+    {
+      "id": "d9f6",
+      "name": "Sanjay telavane",
+      "username": "sanjaytelavane",
+      "email": "sanjaytelavane@gmail.com",
+      "mobile": "7483857463",
+      "department": "EXTC",
+      "password": "Sanjay@123",
+      "role": "HOD",
+      "profilePhoto": ""
     }
   ],
   "leaves": [

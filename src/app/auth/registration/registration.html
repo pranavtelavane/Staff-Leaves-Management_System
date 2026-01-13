@@ -1,77 +1,199 @@
-<div class="container mt-5">
-  <div class="card shadow p-4 mx-auto" style="max-width: 500px">
-    <h4 class="text-center mb-3">Register</h4>
+<div class="container min-vh-100 d-flex align-items-center justify-content-center bg-light">
+  <div class="card shadow-lg p-4 w-100" style="max-width: 520px">
+    <!-- HEADER -->
+    <div class="text-center mb-4">
+      <h4 class="fw-bold mb-1">Create Account</h4>
+      <small class="text-muted">Register to access the portal</small>
+    </div>
 
     <form [formGroup]="registerForm">
-      <div class="mb-3">
-        <label class="form-label">Register as</label>
-        <select class="form-select" formControlName="role">
+      <!-- STEP 1 : ROLE -->
+      @if (!showDetailsForm) {
+      <div class="mb-4">
+        <label class="form-label fw-semibold">Register as</label>
+
+        <select
+          class="form-select"
+          formControlName="role"
+          [class.is-invalid]="
+            registerForm.get('role')?.invalid && registerForm.get('role')?.touched
+          "
+        >
           <option value="">Select Role</option>
           <option value="HOD">HOD</option>
           <option value="STAFF">Staff</option>
         </select>
 
         @if (registerForm.get('role')?.touched && registerForm.get('role')?.hasError('required')) {
-        <div class="text-danger small">Please select a role</div>
+        <div class="invalid-feedback">Please select a role</div>
         }
       </div>
 
-      @if (!showDetailsForm) {
-      <button type="button" class="btn btn-primary w-100" (click)="continue()">Continue</button>
+      <button class="btn btn-primary w-100" type="button" (click)="continue()">Continue →</button>
+      <div class="text-center">
+        <a routerLink="/auth/login" class="text-decoration-none small fw-semibold">
+          Already have an account? Login
+        </a>
+      </div>
       }
 
+      <!-- STEP 2 : DETAILS -->
       @if (showDetailsForm) {
 
-      <div class="mb-3 mt-3">
-        <label>Name</label>
-        <input class="form-control" formControlName="name" />
+      <div class="row g-3">
+        <!-- NAME -->
+        <div class="col-12">
+          <label class="form-label">Full Name</label>
+          <input
+            class="form-control"
+            formControlName="name"
+            [class.is-invalid]="
+              registerForm.get('name')?.invalid && registerForm.get('name')?.touched
+            "
+          />
+          @if (registerForm.get('name')?.touched && registerForm.get('name')?.hasError('required'))
+          {
+          <div class="invalid-feedback">Name is required</div>
+          } @if (registerForm.get('name')?.touched && registerForm.get('name')?.hasError('pattern'))
+          {
+          <div class="invalid-feedback">Enter valid name</div>
+          }
+        </div>
+
+        <!-- USERNAME -->
+        <div class="col-12">
+          <label class="form-label">Username</label>
+          <input
+            class="form-control"
+            formControlName="username"
+            [class.is-invalid]="
+              registerForm.get('username')?.invalid && registerForm.get('username')?.touched
+            "
+          />
+          @if (registerForm.get('username')?.touched &&
+          registerForm.get('username')?.hasError('required')) {
+          <div class="invalid-feedback">Username is required</div>
+          } @if (registerForm.get('username')?.touched &&
+          registerForm.get('username')?.hasError('pattern')) {
+          <div class="invalid-feedback">Invalid username</div>
+          }
+        </div>
+
+        <!-- EMAIL -->
+        <div class="col-12">
+          <label class="form-label">Email</label>
+          <input
+            class="form-control"
+            formControlName="email"
+            [class.is-invalid]="
+              registerForm.get('email')?.invalid && registerForm.get('email')?.touched
+            "
+          />
+          @if (registerForm.get('email')?.touched &&
+          registerForm.get('email')?.hasError('required')) {
+          <div class="invalid-feedback">Email is required</div>
+          } @if (registerForm.get('email')?.touched && registerForm.get('email')?.hasError('email'))
+          {
+          <div class="invalid-feedback">Enter valid email</div>
+          }
+        </div>
+
+        <!-- MOBILE -->
+        <div class="col-12">
+          <label class="form-label">Mobile</label>
+          <input
+            maxlength="10"
+            class="form-control"
+            formControlName="mobile"
+            [class.is-invalid]="
+              registerForm.get('mobile')?.invalid && registerForm.get('mobile')?.touched
+            "
+          />
+          @if (registerForm.get('mobile')?.touched &&
+          registerForm.get('mobile')?.hasError('required')) {
+          <div class="invalid-feedback">Mobile number is required</div>
+          } @if (registerForm.get('mobile')?.touched &&
+          registerForm.get('mobile')?.hasError('pattern')) {
+          <div class="invalid-feedback">Enter valid 10-digit mobile number</div>
+          }
+        </div>
+
+        <!-- DEPARTMENT -->
+        <div class="col-12">
+          <label class="form-label">Department</label>
+          <select
+            class="form-select"
+            formControlName="department"
+            [class.is-invalid]="
+              registerForm.get('department')?.invalid && registerForm.get('department')?.touched
+            "
+          >
+            <option value="">Select Department</option>
+            <option>IT</option>
+            <option>CS</option>
+            <option>EXTC</option>
+          </select>
+          @if (registerForm.get('department')?.touched &&
+          registerForm.get('department')?.hasError('required')) {
+          <div class="invalid-feedback">Department is required</div>
+          }
+        </div>
+
+        <!-- PASSWORD -->
+        <div class="col-12">
+          <label class="form-label">Password</label>
+          <input
+            type="password"
+            class="form-control"
+            formControlName="password"
+            [class.is-invalid]="
+              registerForm.get('password')?.invalid && registerForm.get('password')?.touched
+            "
+          />
+          @if (registerForm.get('password')?.touched &&
+          registerForm.get('password')?.hasError('required')) {
+          <div class="invalid-feedback">Password is required</div>
+          } @if (registerForm.get('password')?.touched &&
+          registerForm.get('password')?.hasError('pattern')) {
+          <div class="invalid-feedback">Must contain 8+ characters, number & special character</div>
+          }
+        </div>
+
+        <!-- PROFILE PHOTO -->
+        <div class="col-12">
+          <label class="form-label">Profile Photo</label>
+          <input
+            type="file"
+            class="form-control"
+            accept="image/*"
+            (change)="onFileSelect($event)"
+          />
+        </div>
+
+        @if (profilePreview) {
+        <div class="col-12 text-center mt-2">
+          <img [src]="profilePreview" class="rounded-circle border" width="90" height="90" />
+        </div>
+        }
       </div>
 
-      <div class="mb-3">
-        <label>Username</label>
-        <input class="form-control" formControlName="username" />
-      </div>
+      <!-- ACTIONS -->
+      <div class="mt-4 d-flex flex-column gap-2">
+        <button class="btn btn-success w-100" type="button" (click)="register()">
+          Create Account
+        </button>
 
-      <div class="mb-3">
-        <label>Email</label>
-        <input class="form-control" formControlName="email" />
-      </div>
+        <button
+          class="btn btn-link text-decoration-none"
+          type="button"
+          (click)="showDetailsForm = false"
+        >
+          ← Change Role
+        </button>
 
-      <div class="mb-3">
-        <label>Mobile</label>
-        <input class="form-control" formControlName="mobile" />
-      </div>
-
-      <div class="mb-3">
-        <label>Department</label>
-        <select class="form-select" formControlName="department">
-          <option value="">Select</option>
-          <option>IT</option>
-          <option>CS</option>
-          <option>EXTC</option>
-        </select>
-      </div>
-
-      <div class="mb-3">
-        <label>Password</label>
-        <input type="password" class="form-control" formControlName="password" />
-      </div>
-
-      <div class="mb-3">
-        <label class="form-label">Profile Photo</label>
-        <input type="file" class="form-control" accept="image/*" (change)="onFileSelect($event)" />
-      </div>
-
-      @if (profilePreview) {
-      <div class="text-center mb-3">
-        <img [src]="profilePreview" class="rounded-circle" width="100" height="100" />
-      </div>
-      }
-
-      <button type="button" class="btn btn-success w-100" (click)="register()">Register</button>
-
-      <div class="text-center mt-3">
-        <a routerLink="/auth/login">Back to Login</a>
+        <a routerLink="/auth/login" class="text-center text-decoration-none small">
+          Already have an account? Login
+        </a>
       </div>
       }
     </form>

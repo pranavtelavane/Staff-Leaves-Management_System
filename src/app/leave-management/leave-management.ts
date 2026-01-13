@@ -10,6 +10,7 @@ import {
 } from '@angular/forms';
 import { Authservice } from '../auth/auth.service';
 import { environment } from '../../environments/environment';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-leave-management',
@@ -96,7 +97,12 @@ export class LeaveManagement {
     const { fromDate, toDate } = this.leaveForm.value;
 
     if (new Date(toDate) < new Date(fromDate)) {
-      alert('To date cannot be before From date');
+      Swal.fire({
+        icon: 'warning',
+        title: 'Invalid Date Range',
+        text: 'To Date cannot be earlier than From Date.',
+        confirmButtonColor: '#dc3545',
+      });
       return;
     }
 
@@ -110,7 +116,14 @@ export class LeaveManagement {
     };
 
     this.http.post(`${environment.apiUrl}/leaves`, payload).subscribe(() => {
-      alert('Leave applied successfully');
+      Swal.fire({
+        icon: 'success',
+        title: 'Leave Applied',
+        text: 'Your leave request has been submitted successfully.',
+        confirmButtonColor: '#198754',
+        timer: 2000,
+        showConfirmButton: false,
+      });
       this.showApplyForm = false;
       this.leaveForm.reset();
       this.loadLeaves();

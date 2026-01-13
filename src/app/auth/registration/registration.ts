@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Authservice } from '../auth.service';
 import { Router, RouterModule } from '@angular/router';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-registration',
@@ -19,12 +20,18 @@ export class Registration {
 
   ngOnInit(): void {
     this.registerForm = this.fb.group({
-      name: ['', Validators.required],
-      username: ['', Validators.required],
+      name: ['', [Validators.required, Validators.pattern('^[a-zA-Z ]+$')]],
+      username: ['', [Validators.required, Validators.pattern('^[a-zA-Z0-9_]+$')]],
       email: ['', [Validators.required, Validators.email]],
-      mobile: ['', Validators.required],
+      mobile: ['', [Validators.required, Validators.pattern('^[0-9]{10}$')]],
       department: ['', Validators.required],
-      password: ['', Validators.required],
+      password: [
+        '',
+        [
+          Validators.required,
+          Validators.pattern('^(?=.*[A-Za-z])(?=.*\\d)(?=.*[@$!%*#?&])[A-Za-z\\d@$!%*#?&]{8,}$'),
+        ],
+      ],
       role: ['', Validators.required],
       profilePhoto: [''],
     });
@@ -48,8 +55,16 @@ export class Registration {
     }
 
     this.authService.register(this.registerForm.value).subscribe(() => {
-      alert('Registration successful');
-      this.router.navigate(['/auth/login']);
+      Swal.fire({
+        icon: 'success',
+        title: 'Registration Successful',
+        text: 'Your account has been created successfully.',
+        confirmButtonText: 'Go to Login',
+        confirmButtonColor: '#198754',
+        allowOutsideClick: false,
+      }).then(() => {
+        this.router.navigate(['/auth/login']);
+      });
     });
   }
 
