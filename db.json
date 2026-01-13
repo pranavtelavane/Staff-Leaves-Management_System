@@ -64,6 +64,17 @@
       "password": "Sanjay@123",
       "role": "HOD",
       "profilePhoto": ""
+    },
+    {
+      "id": "4eb6",
+      "name": "Samita telavane",
+      "username": "samitatelavane",
+      "email": "samitatelavane@gmail.com",
+      "mobile": "5673857458",
+      "password": "Samita@123",
+      "profilePhoto": null,
+      "role": "STAFF",
+      "department": "EXTC"
     }
   ],
   "leaves": [

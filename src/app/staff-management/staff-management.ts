@@ -150,10 +150,38 @@ export class StaffManagement implements OnInit {
   }
 
   deleteStaff(id: string): void {
-    if (!confirm('Are you sure you want to delete this staff?')) return;
+    Swal.fire({
+      title: 'Are you sure?',
+      text: 'This staff member will be permanently deleted.',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#dc3545', // danger
+      cancelButtonColor: '#6c757d', // secondary
+      confirmButtonText: 'Yes, delete',
+      cancelButtonText: 'Cancel',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.http.delete(`${environment.apiUrl}/users/${id}`).subscribe({
+          next: () => {
+            Swal.fire({
+              icon: 'success',
+              title: 'Deleted!',
+              text: 'Staff member has been deleted successfully.',
+              timer: 2000,
+              showConfirmButton: false,
+            });
 
-    this.http.delete(`${environment.apiUrl}/users/${id}`).subscribe(() => {
-      this.loadStaff();
+            this.loadStaff();
+          },
+          error: () => {
+            Swal.fire({
+              icon: 'error',
+              title: 'Failed',
+              text: 'Unable to delete staff. Please try again.',
+            });
+          },
+        });
+      }
     });
   }
 
@@ -195,8 +223,10 @@ export class StaffManagement implements OnInit {
         text: 'New staff member added successfully.',
         confirmButtonColor: '#198754',
         timer: 2000,
-        showConfirmButton: false
+        showConfirmButton: false,
       });
+      this.addStaffForm.reset();
+      this.profilePreview = null;
       this.loadStaff();
     });
   }

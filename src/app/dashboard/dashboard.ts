@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit, ChangeDetectorRef, signal, effect } from '@angular/core';
+import { Component, signal, effect } from '@angular/core';
 import { Authservice } from '../auth/auth.service';
 import { environment } from '../../environments/environment';
 
@@ -16,12 +16,7 @@ export class Dashboard {
   rejectedLeaves = signal(0);
   user = signal<any | null>(null);
 
-  constructor(
-    private http: HttpClient,
-    private authService: Authservice,
-    private cdr: ChangeDetectorRef,
-    private auth: Authservice
-  ) {
+  constructor(private http: HttpClient, private auth: Authservice) {
     effect(() => {
       const currentUser = this.auth.userSignal();
 
