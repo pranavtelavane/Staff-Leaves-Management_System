@@ -1,0 +1,101 @@
+<div class="container-fluid p-4">
+
+  <!-- PAGE HEADER -->
+  <div class="mb-4">
+    <h4 class="fw-bold mb-1">Dashboard</h4>
+    <small class="text-muted">
+      @if (user()?.role === 'HOD') {
+        Overview of your department
+      }
+      @if (user()?.role === 'STAFF') {
+        Your leave summary
+      }
+    </small>
+  </div>
+
+  <!-- ================= HOD DASHBOARD ================= -->
+  @if (user() && user()?.role === 'HOD') {
+    <div class="row g-4">
+
+      <div class="col-md-4">
+        <div class="card shadow-sm border-0 h-100">
+          <div class="card-body d-flex align-items-center">
+            <div class="me-3">
+              <div class="icon-box bg-primary text-white">
+                👥
+              </div>
+            </div>
+            <div>
+              <h6 class="text-muted mb-1">Total Staff</h6>
+              <h3 class="fw-bold mb-0">{{ staffCount() }}</h3>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  }
+
+  <!-- ================= STAFF DASHBOARD ================= -->
+  @if (user() && user()?.role === 'STAFF') {
+    <div class="row g-4">
+
+      <!-- TOTAL LEAVES -->
+      <div class="col-md-4">
+        <div class="card shadow-sm border-0 h-100">
+          <div class="card-body d-flex align-items-center">
+            <div class="me-3">
+              <div class="icon-box bg-primary text-white">
+                📄
+              </div>
+            </div>
+            <div>
+              <h6 class="text-muted mb-1">Total Leaves</h6>
+              <h3 class="fw-bold mb-0">{{ totalLeaves() }}</h3>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- APPROVED -->
+      <div class="col-md-4">
+        <div class="card shadow-sm border-0 h-100">
+          <div class="card-body d-flex align-items-center">
+            <div class="me-3">
+              <div class="icon-box bg-success text-white">
+                ✔
+              </div>
+            </div>
+            <div>
+              <h6 class="text-muted mb-1">Approved</h6>
+              <h3 class="fw-bold mb-0 text-success">
+                {{ approvedLeaves() }}
+              </h3>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- REJECTED -->
+      <div class="col-md-4">
+        <div class="card shadow-sm border-0 h-100">
+          <div class="card-body d-flex align-items-center">
+            <div class="me-3">
+              <div class="icon-box bg-danger text-white">
+                ✖
+              </div>
+            </div>
+            <div>
+              <h6 class="text-muted mb-1">Rejected</h6>
+              <h3 class="fw-bold mb-0 text-danger">
+                {{ rejectedLeaves() }}
+              </h3>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  }
+
+</div>

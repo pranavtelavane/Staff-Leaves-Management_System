@@ -1,0 +1,31 @@
+<nav class="header d-flex align-items-center justify-content-between px-4">
+  
+  <!-- LEFT: APP NAME -->
+  <div class="fw-bold fs-5">
+    Staff Portal
+  </div>
+
+  <!-- RIGHT: USER INFO -->
+  <div class="d-flex align-items-center gap-3">
+
+    <!-- AVATAR -->
+    <img
+      [src]="user()?.profilePhoto || defaultAvatar"
+      (error)="onImgError($event)"
+      class="avatar"
+      alt="Profile"
+    />
+
+    <!-- NAME + ROLE -->
+    <div class="text-end lh-sm">
+      <div class="fw-semibold">{{ user()?.name }}</div>
+      <small class="text-muted">{{ user()?.role }}</small>
+    </div>
+
+    <!-- LOGOUT -->
+    <button class="btn btn-outline-danger btn-sm" (click)="logout()">
+      Logout
+    </button>
+
+  </div>
+</nav>

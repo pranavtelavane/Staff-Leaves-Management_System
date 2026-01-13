@@ -1,0 +1,79 @@
+<div class="container mt-5">
+  <div class="card shadow p-4 mx-auto" style="max-width: 500px">
+    <h4 class="text-center mb-3">Register</h4>
+
+    <form [formGroup]="registerForm">
+      <div class="mb-3">
+        <label class="form-label">Register as</label>
+        <select class="form-select" formControlName="role">
+          <option value="">Select Role</option>
+          <option value="HOD">HOD</option>
+          <option value="STAFF">Staff</option>
+        </select>
+
+        @if (registerForm.get('role')?.touched && registerForm.get('role')?.hasError('required')) {
+        <div class="text-danger small">Please select a role</div>
+        }
+      </div>
+
+      @if (!showDetailsForm) {
+      <button type="button" class="btn btn-primary w-100" (click)="continue()">Continue</button>
+      }
+
+      @if (showDetailsForm) {
+
+      <div class="mb-3 mt-3">
+        <label>Name</label>
+        <input class="form-control" formControlName="name" />
+      </div>
+
+      <div class="mb-3">
+        <label>Username</label>
+        <input class="form-control" formControlName="username" />
+      </div>
+
+      <div class="mb-3">
+        <label>Email</label>
+        <input class="form-control" formControlName="email" />
+      </div>
+
+      <div class="mb-3">
+        <label>Mobile</label>
+        <input class="form-control" formControlName="mobile" />
+      </div>
+
+      <div class="mb-3">
+        <label>Department</label>
+        <select class="form-select" formControlName="department">
+          <option value="">Select</option>
+          <option>IT</option>
+          <option>CS</option>
+          <option>EXTC</option>
+        </select>
+      </div>
+
+      <div class="mb-3">
+        <label>Password</label>
+        <input type="password" class="form-control" formControlName="password" />
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label">Profile Photo</label>
+        <input type="file" class="form-control" accept="image/*" (change)="onFileSelect($event)" />
+      </div>
+
+      @if (profilePreview) {
+      <div class="text-center mb-3">
+        <img [src]="profilePreview" class="rounded-circle" width="100" height="100" />
+      </div>
+      }
+
+      <button type="button" class="btn btn-success w-100" (click)="register()">Register</button>
+
+      <div class="text-center mt-3">
+        <a routerLink="/auth/login">Back to Login</a>
+      </div>
+      }
+    </form>
+  </div>
+</div>

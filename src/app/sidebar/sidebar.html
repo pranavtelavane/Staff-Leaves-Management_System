@@ -1,0 +1,33 @@
+<div class="d-flex flex-column vh-100 border-end bg-light">
+
+  <div class="list-group list-group-flush flex-grow-1">
+
+    <a
+      routerLink="/dashboard"
+      routerLinkActive="active"
+      class="list-group-item list-group-item-action"
+    >
+      Dashboard
+    </a>
+
+    @if (isHod()) {
+      <a
+        routerLink="/staff-management"
+        routerLinkActive="active"
+        class="list-group-item list-group-item-action"
+      >
+        Staff Management
+      </a>
+    }
+
+    <a
+      routerLink="/leave-management"
+      routerLinkActive="active"
+      class="list-group-item list-group-item-action"
+    >
+      Leave Management
+    </a>
+
+  </div>
+
+</div>
